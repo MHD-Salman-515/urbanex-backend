@@ -5,8 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "scripts": { 
-  "start:prod": "node dist/main.js",
+  "scripts": { "start:prod": "node dist/src/main.js",
 "build": "tsc -p tsconfig.build.json",
     "build:render": "npm run build",
     "start": "nest start",
