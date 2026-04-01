@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MarketTrendService } from '../market-intelligence/market-trend.service';
+import { MarketTrendService } from '../../market-intelligence/market-trend.service';
 
 interface CandidateProperty {
   id: number;

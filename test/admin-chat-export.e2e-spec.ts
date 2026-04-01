@@ -3,8 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import request from 'supertest';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { JwtStrategy } from '../src/auth/jwt.strategy';
+import { RolesGuard } from '../src/auth/guards/roles.guard';
 import { AdminChatController } from './admin-chat.controller';
 import { AdminChatService } from './admin-chat.service';
 
