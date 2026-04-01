@@ -5,9 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "scripts": { "build": "npx nest build",
-  "start:prod": "node dist/main.js"
-,
+  "scripts": { 
+  "start:prod": "node dist/main.js",
+"build": "tsc -p tsconfig.build.json",
     "build:render": "npm run build",
     "start": "nest start",
     "start:dev": "kill-port 3000 && nest start --watch",
