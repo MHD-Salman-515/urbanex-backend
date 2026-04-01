@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CreosPrismaModule } from 'src/prisma/creos-prisma.module';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 import { MarketController } from './market.controller';
 import { MarketIntelligenceController } from './market-intelligence.controller';
 import { ComparableEngineService } from './comparable-engine.service';

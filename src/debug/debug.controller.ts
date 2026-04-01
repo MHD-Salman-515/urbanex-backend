@@ -1,10 +1,10 @@
 import { Body, Controller, Get, NotFoundException, Post, Query } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import * as bcrypt from 'bcryptjs';
-import { AuthService } from 'src/auth/auth.service';
-import { AuthHitsService } from 'src/auth/auth-hits.service';
-import { MailService } from 'src/mail/mail.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { AuthService } from '../auth/auth.service';
+import { AuthHitsService } from '../auth/auth-hits.service';
+import { MailService } from '../mail/mail.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Controller('debug')
 export class DebugController {

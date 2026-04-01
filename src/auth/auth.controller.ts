@@ -27,7 +27,7 @@ import { OtpRequestDto } from './dto/otp-request.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { Roles } from './decorators/roles.decorator';
-import { isProduction } from 'src/config/runtime-env';
+import { isProduction } from '../config/runtime-env';
 
 @Controller(['auth', 'api/auth'])
 export class AuthController {

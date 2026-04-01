@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { buildExplainTrace, ExplainTrace } from 'src/advisor/explanation/explain-trace.helper';
+import { PrismaService } from '../prisma/prisma.service';
+import { buildExplainTrace, ExplainTrace } from '../advisor/explanation/explain-trace.helper';
 
 export interface MarketEstimateInput {
   area_m2: number;

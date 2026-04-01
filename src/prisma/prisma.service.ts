@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { loadLocalEnvFiles } from 'src/config/runtime-env';
+import { loadLocalEnvFiles } from '../config/runtime-env';
 
 @Injectable()
 export class PrismaService

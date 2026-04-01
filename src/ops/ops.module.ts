@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from 'src/auth/auth.module';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { AuthModule } from '../auth/auth.module';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { OpsController } from './ops.controller';
 import { OpsService } from './ops.service';
 

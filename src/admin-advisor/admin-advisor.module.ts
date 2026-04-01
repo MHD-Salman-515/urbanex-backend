@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from 'src/auth/auth.module';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { CreosPrismaModule } from 'src/prisma/creos-prisma.module';
+import { AuthModule } from '../auth/auth.module';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { CreosPrismaModule } from '../prisma/creos-prisma.module';
 import { AdminAdvisorController } from './admin-advisor.controller';
 import { AdminAdvisorService } from './admin-advisor.service';
 

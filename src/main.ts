@@ -1,3 +1,4 @@
+import './register-paths';
 import './config/runtime-env';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';

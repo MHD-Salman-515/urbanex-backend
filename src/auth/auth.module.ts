@@ -3,7 +3,7 @@
 // import { PassportModule } from '@nestjs/passport';
 // import { AuthService } from './auth.service';
 // import { AuthController } from './auth.controller';
-// import { UsersModule } from 'src/users/users.module';
+// import { UsersModule } from '../users/users.module';
 // import { JwtStrategy } from './jwt.strategy';
 // import { JwtAuthGuard } from './guards/jwt-auth.guard';
 // @Module({
@@ -27,11 +27,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController, OwnerAuthController } from './auth.controller';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { MailModule } from 'src/mail/mail.module';
+import { PrismaModule } from '../prisma/prisma.module';
+import { MailModule } from '../mail/mail.module';
 import { GoogleStrategy } from './google.strategy';
 import { GithubStrategy } from './github.strategy';
 import { AuthHitsService } from './auth-hits.service';

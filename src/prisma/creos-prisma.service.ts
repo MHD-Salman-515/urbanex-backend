@@ -1,6 +1,6 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { loadLocalEnvFiles } from 'src/config/runtime-env';
+import { loadLocalEnvFiles } from '../config/runtime-env';
 
 @Injectable()
 export class CreosPrismaService

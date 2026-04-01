@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { normalizeAreaInput, normalizeAreaValue } from 'src/advisor/utils/area-normalization';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { normalizeAreaInput, normalizeAreaValue } from '../advisor/utils/area-normalization';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 import { CreateExternalMarketObservationDto } from './dto/create-external-market-observation.dto';
 import { CreateExternalMarketSourceDto } from './dto/create-external-market-source.dto';
 

@@ -20,7 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
-import { OptionalJwtAuthGuard } from 'src/auth/guards/optional-jwt-auth.guard';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
 import { AdvisorService } from './advisor.service';
 import { SellerPriceDto } from './dto/seller-price.dto';
 import { BuyerEvaluateDto } from './dto/buyer-evaluate.dto';

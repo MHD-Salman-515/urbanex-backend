@@ -3,7 +3,7 @@ import { MarketData } from '@prisma/client';
 import {
   getAreaSearchCandidates,
   normalizeAreaValue,
-} from 'src/advisor/utils/area-normalization';
+} from '../advisor/utils/area-normalization';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   ComparableScoringBreakdown,

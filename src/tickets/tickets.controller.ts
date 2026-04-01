@@ -12,7 +12,7 @@ import {
 
 import { TicketsService } from './tickets.service';
 import { TicketStatus } from '@prisma/client';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('tickets')

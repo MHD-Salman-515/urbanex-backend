@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { normalizeAreaValue } from 'src/advisor/utils/area-normalization';
+import { normalizeAreaValue } from '../advisor/utils/area-normalization';
 import { ComparableEngineService, RankedComparable } from './comparable-engine.service';
 import { computeMedian } from './similarity-score.util';
 

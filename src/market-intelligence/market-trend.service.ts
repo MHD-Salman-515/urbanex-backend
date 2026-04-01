@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { normalizeAreaValue } from 'src/advisor/utils/area-normalization';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { normalizeAreaValue } from '../advisor/utils/area-normalization';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 
 interface SnapshotRow {
   avg_price_per_m2_syp: number;

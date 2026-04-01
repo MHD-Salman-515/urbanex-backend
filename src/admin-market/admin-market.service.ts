@@ -1,12 +1,12 @@
 import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 import {
   normalizeAreaInput,
   normalizeAreaValue,
-} from 'src/advisor/utils/area-normalization';
-import { ConfidenceService } from 'src/advisor/confidence/confidence.service';
+} from '../advisor/utils/area-normalization';
+import { ConfidenceService } from '../advisor/confidence/confidence.service';
 
 interface MarketOutlierRow {
   id: number;

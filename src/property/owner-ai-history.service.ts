@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 
 export interface OwnerAiHistoryResponse {
   days: number;

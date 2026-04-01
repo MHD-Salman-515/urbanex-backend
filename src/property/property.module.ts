@@ -15,11 +15,11 @@ import { OwnerSuggestionsController } from './owner-suggestions.controller';
 import { OwnerSuggestionsService } from './owner-suggestions.service';
 import { OwnerPortfolioAnalyzerService } from './owner-portfolio-analyzer.service';
 import { OwnerPortfolioAnalyzerController } from './owner-portfolio-analyzer.controller';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AuthModule } from 'src/auth/auth.module';
-import { CreosPrismaModule } from 'src/prisma/creos-prisma.module';
-import { AdvisorModule } from 'src/advisor/advisor.module';
-import { AiModule } from 'src/ai/ai.module';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { AuthModule } from '../auth/auth.module';
+import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { AdvisorModule } from '../advisor/advisor.module';
+import { AiModule } from '../ai/ai.module';
 
 @Module({
   imports: [AuthModule, CreosPrismaModule, AdvisorModule, AiModule],

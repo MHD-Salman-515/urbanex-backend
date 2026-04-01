@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AdvisorService } from 'src/advisor/advisor.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { AdvisorService } from '../advisor/advisor.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 type PropertyTypeKey = 'apartment' | 'house' | 'villa' | 'studio' | 'land';
 

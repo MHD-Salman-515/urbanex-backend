@@ -3,16 +3,16 @@ import {
   AiConversationTurn,
   AiService,
   buildOllamaSystemPrompt,
-} from 'src/ai/ai.service';
-import { AdvisorService } from 'src/advisor/advisor.service';
+} from '../ai/ai.service';
+import { AdvisorService } from '../advisor/advisor.service';
 import { ChatIntentService, type ExtractedPropertyData } from './chat-intent.service';
 import {
   buildOutOfScopeReply,
   classifyRealEstateRequest,
   extractComparisonTargets,
   type RealEstateLanguage,
-} from 'src/chat-ux/real-estate-domain';
-import { MarketStatsService } from 'src/market-intelligence/market-stats.service';
+} from '../chat-ux/real-estate-domain';
+import { MarketStatsService } from '../market-intelligence/market-stats.service';
 
 export type OrchestratorIntent =
   | 'GENERAL_CHAT'

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { buildExplainTrace } from 'src/advisor/explanation/explain-trace.helper';
-import { normalizeAreaValue } from 'src/advisor/utils/area-normalization';
-import { MarketBrainService } from 'src/ai/market-brain.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { buildExplainTrace } from '../advisor/explanation/explain-trace.helper';
+import { normalizeAreaValue } from '../advisor/utils/area-normalization';
+import { MarketBrainService } from '../ai/market-brain.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { OwnerStrategyService } from './owner-strategy.service';
 
 type AnalyzerLabel = 'OVERPRICED' | 'FAIR' | 'UNDERPRICED' | 'MISSING_FIELDS' | 'NO_MARKET_DATA';

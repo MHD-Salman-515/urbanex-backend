@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   getAreaSearchCandidates,
   normalizeAreaValue,
-} from 'src/advisor/utils/area-normalization';
+} from '../advisor/utils/area-normalization';
 import { PrismaService } from '../prisma/prisma.service';
 import { computeMedian } from './similarity-score.util';
 

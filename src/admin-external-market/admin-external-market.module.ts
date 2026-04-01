@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CreosPrismaModule } from 'src/prisma/creos-prisma.module';
+import { CreosPrismaModule } from '../prisma/creos-prisma.module';
 import { AdminExternalMarketController } from './admin-external-market.controller';
 import { AdminExternalMarketService } from './admin-external-market.service';
 

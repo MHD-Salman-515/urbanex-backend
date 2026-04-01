@@ -6,17 +6,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { buildExplainTrace } from 'src/advisor/explanation/explain-trace.helper';
-import { buildBuyerSearchReply } from 'src/chat-ux/templates';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { buildExplainTrace } from '../advisor/explanation/explain-trace.helper';
+import { buildBuyerSearchReply } from '../chat-ux/templates';
+import { PrismaService } from '../prisma/prisma.service';
 import {
   detectBuyerChatIntent,
   parseBuyerSearch,
   type BuyerChatIntent,
 } from './buyer-chat.intent';
 import { PropertyRankingService } from './ranking/property-ranking.service';
-import { AdvisorService } from 'src/advisor/advisor.service';
-import { MarketTrendService } from 'src/market-intelligence/market-trend.service';
+import { AdvisorService } from '../advisor/advisor.service';
+import { MarketTrendService } from '../market-intelligence/market-trend.service';
 import {
   buildAcknowledgementReply,
   buildConfirmationReply,
@@ -28,14 +28,14 @@ import {
   extractComparisonTargets,
   type RealEstateAssistantIntent,
   type RealEstateLanguage,
-} from 'src/chat-ux/real-estate-domain';
-import { buildBuyerEvaluateReply, buildMarketTrendReply } from 'src/chat-ux/templates';
-import { AiService } from 'src/ai/ai.service';
+} from '../chat-ux/real-estate-domain';
+import { buildBuyerEvaluateReply, buildMarketTrendReply } from '../chat-ux/templates';
+import { AiService } from '../ai/ai.service';
 import {
   ChatAdvisorIntent,
   ChatIntentService,
-} from 'src/chat/chat-intent.service';
-import { MarketStatsService } from 'src/market-intelligence/market-stats.service';
+} from '../chat/chat-intent.service';
+import { MarketStatsService } from '../market-intelligence/market-stats.service';
 
 type RecommendedProperty = {
   id: number;

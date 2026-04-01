@@ -129,11 +129,11 @@ export class MarketDataService {
 
     for (const row of parsedRows) {
       const prepared = this.prepareRow(row);
-      if (!prepared.ok) {
-        invalidReports.push(prepared.report);
+      if ('row' in prepared) {
+        preparedRows.push(prepared.row);
         continue;
       }
-      preparedRows.push(prepared.row);
+      invalidReports.push(prepared.report);
     }
 
     const uniqueRows = new Map<string, PreparedMarketDataRow>();

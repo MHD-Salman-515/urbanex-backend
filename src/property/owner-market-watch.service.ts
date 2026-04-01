@@ -3,9 +3,9 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { AdvisorService } from 'src/advisor/advisor.service';
-import { normalizeAreaInput } from 'src/advisor/utils/area-normalization';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { AdvisorService } from '../advisor/advisor.service';
+import { normalizeAreaInput } from '../advisor/utils/area-normalization';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class OwnerMarketWatchService {

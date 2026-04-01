@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 import { SellerPriceDto } from './dto/seller-price.dto';
 import { BuyerEvaluateDto } from './dto/buyer-evaluate.dto';
 import { ExplainDto } from './dto/explain.dto';
@@ -31,8 +31,8 @@ import { detectAdvisorLanguage } from './utils/language-detector';
 import { normalizeAreaInput, normalizeAreaValue } from './utils/area-normalization';
 import { ADVISOR_CACHE } from './cache/advisor-cache.port';
 import type { AdvisorCachePort } from './cache/advisor-cache.port';
-import { MarketPricingService } from 'src/market-intelligence/market-pricing.service';
-import { MarketStatsService } from 'src/market-intelligence/market-stats.service';
+import { MarketPricingService } from '../market-intelligence/market-pricing.service';
+import { MarketStatsService } from '../market-intelligence/market-stats.service';
 
 interface AreasPriceRow {
   city: string;

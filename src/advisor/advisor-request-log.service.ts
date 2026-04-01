@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from 'src/prisma/creos-prisma.service';
+import { CreosPrismaService } from '../prisma/creos-prisma.service';
 
 export interface AdvisorRequestLogPayload {
   endpoint: string;

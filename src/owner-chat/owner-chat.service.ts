@@ -6,16 +6,16 @@ import {
   NotFoundException,
   Optional,
 } from '@nestjs/common';
-import { AiConversationTurn, AiService } from 'src/ai/ai.service';
-import { MarketBrainService } from 'src/ai/market-brain.service';
-import { RagService } from 'src/ai/rag.service';
-import { AdvisorService } from 'src/advisor/advisor.service';
-import { ChatIntentService, type ChatAdvisorIntent, type ExtractedPropertyData } from 'src/chat/chat-intent.service';
-import { OllamaOrchestratorService } from 'src/chat/ollama-orchestrator.service';
+import { AiConversationTurn, AiService } from '../ai/ai.service';
+import { MarketBrainService } from '../ai/market-brain.service';
+import { RagService } from '../ai/rag.service';
+import { AdvisorService } from '../advisor/advisor.service';
+import { ChatIntentService, type ChatAdvisorIntent, type ExtractedPropertyData } from '../chat/chat-intent.service';
+import { OllamaOrchestratorService } from '../chat/ollama-orchestrator.service';
 import {
   buildBuyerEvaluateReply,
   buildSellerPriceReply,
-} from 'src/chat-ux/templates';
+} from '../chat-ux/templates';
 import {
   buildAcknowledgementReply,
   buildConfirmationReply,
@@ -25,13 +25,13 @@ import {
   buildUnknownRealEstateReply,
   classifyRealEstateRequest,
   type RealEstateLanguage,
-} from 'src/chat-ux/real-estate-domain';
-import { OwnerAiHistoryService } from 'src/property/owner-ai-history.service';
-import { OwnerPortfolioService } from 'src/property/owner-portfolio.service';
-import { OwnerStrategyService } from 'src/property/owner-strategy.service';
-import { OwnerSuggestionsService } from 'src/property/owner-suggestions.service';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { MarketStatsService } from 'src/market-intelligence/market-stats.service';
+} from '../chat-ux/real-estate-domain';
+import { OwnerAiHistoryService } from '../property/owner-ai-history.service';
+import { OwnerPortfolioService } from '../property/owner-portfolio.service';
+import { OwnerStrategyService } from '../property/owner-strategy.service';
+import { OwnerSuggestionsService } from '../property/owner-suggestions.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { MarketStatsService } from '../market-intelligence/market-stats.service';
 import { detectOwnerChatIntent, OwnerChatIntent } from './owner-chat.intent';
 import { parseArabicMessage } from './parse-arabic-message';
 

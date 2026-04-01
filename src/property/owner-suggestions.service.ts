@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AdvisorRequestLogService } from 'src/advisor/advisor-request-log.service';
+import { AdvisorRequestLogService } from '../advisor/advisor-request-log.service';
 import { OwnerPortfolioService } from './owner-portfolio.service';
 
 interface SuggestionAction {
