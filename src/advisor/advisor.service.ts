@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 import { SellerPriceDto } from './dto/seller-price.dto';
 import { BuyerEvaluateDto } from './dto/buyer-evaluate.dto';
 import { ExplainDto } from './dto/explain.dto';
@@ -80,7 +80,7 @@ interface MarketInsightRow {
 @Injectable()
 export class AdvisorService {
   constructor(
-    private readonly creosPrisma: CreosPrismaService,
+    private readonly urbanexPrisma: UrbanexPrismaService,
     private readonly explanationService: AdvisorExplanationService,
     private readonly confidenceService: ConfidenceService,
     private readonly marketPricingService: MarketPricingService,
@@ -340,7 +340,7 @@ export class AdvisorService {
     ownerId?: number,
   ): Promise<AdvisorTrackResponse> {
     const finalPrice = this.toPositiveBigInt(dto.final_price_syp);
-    const row = await this.creosPrisma.advisorOutcome.create({
+    const row = await this.urbanexPrisma.advisorOutcome.create({
       data: {
         logId: dto.log_id,
         action: dto.action,
@@ -362,10 +362,10 @@ export class AdvisorService {
     from.setDate(from.getDate() - days);
 
     const [suggestions, groupedOutcomes] = await Promise.all([
-      this.creosPrisma.advisorRequestLog.count({
+      this.urbanexPrisma.advisorRequestLog.count({
         where: { createdAt: { gte: from } },
       }),
-      this.creosPrisma.advisorOutcome.groupBy({
+      this.urbanexPrisma.advisorOutcome.groupBy({
         by: ['action'],
         where: { createdAt: { gte: from } },
         _count: { _all: true },
@@ -429,7 +429,7 @@ export class AdvisorService {
     const from = new Date();
     from.setDate(from.getDate() - params.days_window);
 
-    const rows = await this.creosPrisma.marketData.findMany({
+    const rows = await this.urbanexPrisma.marketData.findMany({
       where: {
         city,
         ...(district ? { district } : {}),
@@ -612,7 +612,7 @@ export class AdvisorService {
     const from = new Date();
     from.setDate(from.getDate() - daysWindow);
 
-    const rows = await this.creosPrisma.marketData.findMany({
+    const rows = await this.urbanexPrisma.marketData.findMany({
       where: {
         city: normalizedInput.city_norm,
         district: normalizedInput.district_norm,
@@ -834,7 +834,7 @@ export class AdvisorService {
   private async findAreaPriceRow(
     normalizedInput: NormalizedSellerInput,
   ): Promise<AreasPriceRow> {
-    const rows = await this.creosPrisma.$queryRaw<AreasPriceRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<AreasPriceRow[]>(Prisma.sql`
       SELECT city, district, property_type, avg_price_per_m2, sample_count, updated_at
       FROM areas_price
       WHERE city = ${normalizedInput.city_norm}
@@ -848,7 +848,7 @@ export class AdvisorService {
     }
 
     // Transitional fallback until ingestion normalizes stored values.
-    const fallbackRows = await this.creosPrisma.$queryRaw<AreasPriceRow[]>(Prisma.sql`
+    const fallbackRows = await this.urbanexPrisma.$queryRaw<AreasPriceRow[]>(Prisma.sql`
       SELECT city, district, property_type, avg_price_per_m2, sample_count, updated_at
       FROM areas_price
       WHERE LOWER(city) = LOWER(${normalizedInput.city_norm})
@@ -867,7 +867,7 @@ export class AdvisorService {
   }
 
   private async findLatestFxRate(): Promise<FxRateRow> {
-    const rows = await this.creosPrisma.$queryRaw<FxRateRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<FxRateRow[]>(Prisma.sql`
       SELECT id, usd_to_syp, source, effective_at
       FROM fx_rates
       WHERE effective_at <= NOW()
@@ -979,7 +979,7 @@ export class AdvisorService {
   private async findStabilityCv(
     normalizedInput: NormalizedSellerInput,
   ): Promise<number | null> {
-    const rows = await this.creosPrisma.$queryRaw<StabilityStatsRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<StabilityStatsRow[]>(Prisma.sql`
       SELECT
         COUNT(*) AS sample_count,
         AVG(

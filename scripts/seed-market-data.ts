@@ -132,10 +132,10 @@ function chunked<T>(items: T[], size: number): T[][] {
   return chunks;
 }
 
-function getCreosDatabaseUrl(): string {
-  const url = process.env.CREOS_DATABASE_URL;
+function getUrbanexDatabaseUrl(): string {
+  const url = process.env.URBANEX_DATABASE_URL;
   if (!url) {
-    throw new Error('CREOS_DATABASE_URL is required for seeding creos_ai');
+    throw new Error('URBANEX_DATABASE_URL is required for seeding urbanex_ai');
   }
   return url;
 }
@@ -143,7 +143,7 @@ function getCreosDatabaseUrl(): string {
 async function main() {
   const csvPath = resolve(process.cwd(), process.argv[2] || 'data/market-seed.csv');
   const prisma = new PrismaClient({
-    datasources: { db: { url: getCreosDatabaseUrl() } },
+    datasources: { db: { url: getUrbanexDatabaseUrl() } },
   });
 
   try {

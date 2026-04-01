@@ -8,11 +8,11 @@ import { ADVISOR_CACHE } from './cache/advisor-cache.port';
 import { BuyerEvaluationService } from './buyer-evaluation.service';
 import { AdvisorLoggingInterceptor } from './advisor-logging.interceptor';
 import { AdvisorRequestLogService } from './advisor-request-log.service';
-import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { UrbanexPrismaModule } from '../prisma/urbanex-prisma.module';
 import { MarketIntelligenceModule } from '../market-intelligence/market-intelligence.module';
 
 @Module({
-  imports: [CreosPrismaModule, MarketIntelligenceModule],
+  imports: [UrbanexPrismaModule, MarketIntelligenceModule],
   controllers: [AdvisorController],
   providers: [
     AdvisorService,

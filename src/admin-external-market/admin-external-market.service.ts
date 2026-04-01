@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { normalizeAreaInput, normalizeAreaValue } from '../advisor/utils/area-normalization';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 import { CreateExternalMarketObservationDto } from './dto/create-external-market-observation.dto';
 import { CreateExternalMarketSourceDto } from './dto/create-external-market-source.dto';
 
@@ -32,7 +32,7 @@ interface ObservationJoinRow {
 
 @Injectable()
 export class AdminExternalMarketService {
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async createSource(dto: CreateExternalMarketSourceDto) {
     const name = String(dto.name || '').trim();
@@ -45,14 +45,14 @@ export class AdminExternalMarketService {
     const reliability = this.normalizeReliability(dto.reliability_score);
     const methodologyJson = dto.methodology_json ?? null;
 
-    await this.creosPrisma.$executeRaw(Prisma.sql`
+    await this.urbanexPrisma.$executeRaw(Prisma.sql`
       INSERT INTO external_market_sources
       (name, source_type, base_url, reliability_score, is_active, methodology_json, created_at, updated_at)
       VALUES
       (${name}, ${sourceType}, ${baseUrl}, ${reliability}, 1, ${methodologyJson}, NOW(3), NOW(3))
     `);
 
-    const created = await this.creosPrisma.$queryRaw<SourceRow[]>(Prisma.sql`
+    const created = await this.urbanexPrisma.$queryRaw<SourceRow[]>(Prisma.sql`
       SELECT
         id,
         name,
@@ -72,7 +72,7 @@ export class AdminExternalMarketService {
   }
 
   async listSources() {
-    const rows = await this.creosPrisma.$queryRaw<SourceRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<SourceRow[]>(Prisma.sql`
       SELECT
         id,
         name,
@@ -204,7 +204,7 @@ export class AdminExternalMarketService {
     const periodStart = new Date(periodEnd);
     periodStart.setMonth(periodStart.getMonth() - monthsWindow);
 
-    const observations = await this.creosPrisma.$queryRaw<ObservationJoinRow[]>(Prisma.sql`
+    const observations = await this.urbanexPrisma.$queryRaw<ObservationJoinRow[]>(Prisma.sql`
       SELECT
         o.source_id,
         s.name AS source_name,
@@ -305,7 +305,7 @@ export class AdminExternalMarketService {
         generated_at: new Date().toISOString(),
       };
 
-      await this.creosPrisma.$executeRaw(Prisma.sql`
+      await this.urbanexPrisma.$executeRaw(Prisma.sql`
         INSERT INTO external_baseline_index
         (
           city,
@@ -386,7 +386,7 @@ export class AdminExternalMarketService {
       whereClause = Prisma.sql`WHERE ${predicate}`;
     }
 
-    const rows = await this.creosPrisma.$queryRaw<Array<{
+    const rows = await this.urbanexPrisma.$queryRaw<Array<{
       id: bigint;
       city: string;
       district: string;
@@ -456,7 +456,7 @@ export class AdminExternalMarketService {
       throw new BadRequestException('source_id must be a positive integer');
     }
 
-    const sourceRows = await this.creosPrisma.$queryRaw<Array<{ id: number }>>(Prisma.sql`
+    const sourceRows = await this.urbanexPrisma.$queryRaw<Array<{ id: number }>>(Prisma.sql`
       SELECT id FROM external_market_sources WHERE id = ${input.sourceId} LIMIT 1
     `);
     if (!sourceRows.length) {
@@ -525,7 +525,7 @@ export class AdminExternalMarketService {
     ingest_hash: string;
     raw_json: unknown;
   }): Promise<boolean> {
-    const exists = await this.creosPrisma.$queryRaw<Array<{ id: bigint }>>(Prisma.sql`
+    const exists = await this.urbanexPrisma.$queryRaw<Array<{ id: bigint }>>(Prisma.sql`
       SELECT id
       FROM external_market_observations
       WHERE ingest_hash = ${prepared.ingest_hash}
@@ -536,7 +536,7 @@ export class AdminExternalMarketService {
       return false;
     }
 
-    await this.creosPrisma.$executeRaw(Prisma.sql`
+    await this.urbanexPrisma.$executeRaw(Prisma.sql`
       INSERT INTO external_market_observations
       (
         source_id,

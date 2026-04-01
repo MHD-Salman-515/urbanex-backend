@@ -36,7 +36,7 @@ export class OwnerAiHistoryController {
   constructor(private readonly ownerAiHistoryService: OwnerAiHistoryService) {}
 
   @Get('ai-history')
-  @ApiOperation({ summary: 'Owner Creos AI history (no PII)' })
+  @ApiOperation({ summary: 'Owner Urbanex AI history (no PII)' })
   @ApiQuery({
     name: 'days',
     required: false,

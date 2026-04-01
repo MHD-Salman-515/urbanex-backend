@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { UrbanexPrismaModule } from '../prisma/urbanex-prisma.module';
 import { AdminExternalMarketController } from './admin-external-market.controller';
 import { AdminExternalMarketService } from './admin-external-market.service';
 
 @Module({
-  imports: [CreosPrismaModule],
+  imports: [UrbanexPrismaModule],
   controllers: [AdminExternalMarketController],
   providers: [AdminExternalMarketService],
   exports: [AdminExternalMarketService],

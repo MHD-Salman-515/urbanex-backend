@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 
 export interface AdminAdvisorAnalyticsResponse {
   days: number;
@@ -30,7 +30,7 @@ export interface AdminAdvisorExportRow {
 
 @Injectable()
 export class AdminAdvisorService {
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async getAnalytics(days: number): Promise<AdminAdvisorAnalyticsResponse> {
     const from = new Date();
@@ -38,19 +38,19 @@ export class AdminAdvisorService {
 
     const [suggestions, acceptedOptimal, acceptedFast, edited, ignored] =
       await Promise.all([
-        this.creosPrisma.advisorRequestLog.count({
+        this.urbanexPrisma.advisorRequestLog.count({
           where: { createdAt: { gte: from } },
         }),
-        this.creosPrisma.advisorOutcome.count({
+        this.urbanexPrisma.advisorOutcome.count({
           where: { createdAt: { gte: from }, action: 'accepted_optimal' },
         }),
-        this.creosPrisma.advisorOutcome.count({
+        this.urbanexPrisma.advisorOutcome.count({
           where: { createdAt: { gte: from }, action: 'accepted_fast' },
         }),
-        this.creosPrisma.advisorOutcome.count({
+        this.urbanexPrisma.advisorOutcome.count({
           where: { createdAt: { gte: from }, action: 'edited' },
         }),
-        this.creosPrisma.advisorOutcome.count({
+        this.urbanexPrisma.advisorOutcome.count({
           where: { createdAt: { gte: from }, action: 'ignored' },
         }),
       ]);
@@ -72,7 +72,7 @@ export class AdminAdvisorService {
     from.setDate(from.getDate() - days);
 
     const [requestLogs, outcomes] = await Promise.all([
-      this.creosPrisma.advisorRequestLog.findMany({
+      this.urbanexPrisma.advisorRequestLog.findMany({
         where: { createdAt: { gte: from } },
         orderBy: { createdAt: 'desc' },
         select: {
@@ -88,7 +88,7 @@ export class AdminAdvisorService {
           createdAt: true,
         },
       }),
-      this.creosPrisma.advisorOutcome.findMany({
+      this.urbanexPrisma.advisorOutcome.findMany({
         where: { createdAt: { gte: from } },
         orderBy: { createdAt: 'desc' },
         select: {

@@ -164,10 +164,10 @@ function buildIngestHash(params: {
   return createHash('sha1').update(payload).digest('hex');
 }
 
-function getCreosDatabaseUrl(): string {
-  const value = process.env.CREOS_DATABASE_URL;
+function getUrbanexDatabaseUrl(): string {
+  const value = process.env.URBANEX_DATABASE_URL;
   if (!value) {
-    throw new Error('CREOS_DATABASE_URL is required');
+    throw new Error('URBANEX_DATABASE_URL is required');
   }
   return value;
 }
@@ -314,7 +314,7 @@ async function main() {
 
   const csvPath = resolve(process.cwd(), argPath);
   const prisma = new PrismaClient({
-    datasources: { db: { url: getCreosDatabaseUrl() } },
+    datasources: { db: { url: getUrbanexDatabaseUrl() } },
   });
 
   try {

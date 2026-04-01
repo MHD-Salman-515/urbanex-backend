@@ -17,12 +17,12 @@ import { OwnerPortfolioAnalyzerService } from './owner-portfolio-analyzer.servic
 import { OwnerPortfolioAnalyzerController } from './owner-portfolio-analyzer.controller';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { AuthModule } from '../auth/auth.module';
-import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { UrbanexPrismaModule } from '../prisma/urbanex-prisma.module';
 import { AdvisorModule } from '../advisor/advisor.module';
 import { AiModule } from '../ai/ai.module';
 
 @Module({
-  imports: [AuthModule, CreosPrismaModule, AdvisorModule, AiModule],
+  imports: [AuthModule, UrbanexPrismaModule, AdvisorModule, AiModule],
   providers: [
     PropertyService,
     OwnerStrategyService,

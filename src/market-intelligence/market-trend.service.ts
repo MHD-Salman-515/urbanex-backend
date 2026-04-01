@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { normalizeAreaValue } from '../advisor/utils/area-normalization';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 
 interface SnapshotRow {
   avg_price_per_m2_syp: number;
@@ -10,7 +10,7 @@ interface SnapshotRow {
 
 @Injectable()
 export class MarketTrendService {
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async getTrend(params: {
     city: string;
@@ -38,7 +38,7 @@ export class MarketTrendService {
     const from = new Date();
     from.setDate(from.getDate() - days);
 
-    const rows = await this.creosPrisma.$queryRaw<SnapshotRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<SnapshotRow[]>(Prisma.sql`
       SELECT avg_price_per_m2_syp, snapshot_date
       FROM market_snapshot_daily
       WHERE city = ${city}

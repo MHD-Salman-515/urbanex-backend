@@ -3,22 +3,22 @@ import { PrismaClient } from '@prisma/client';
 import { loadLocalEnvFiles } from '../config/runtime-env';
 
 @Injectable()
-export class CreosPrismaService
+export class UrbanexPrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
   constructor() {
     loadLocalEnvFiles();
 
-    const creosDatabaseUrl = process.env.CREOS_DATABASE_URL;
-    if (!creosDatabaseUrl) {
+    const urbanexDatabaseUrl = process.env.URBANEX_DATABASE_URL;
+    if (!urbanexDatabaseUrl) {
       throw new Error(
-        'CREOS_DATABASE_URL is required for CreosPrismaService',
+        'URBANEX_DATABASE_URL is required for UrbanexPrismaService',
       );
     }
 
     super({
-      datasourceUrl: creosDatabaseUrl,
+      datasourceUrl: urbanexDatabaseUrl,
     });
   }
 

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { HealthController } from './health.controller';
 import { HealthService } from './health.service';
-import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { UrbanexPrismaModule } from '../prisma/urbanex-prisma.module';
 
 @Module({
-  imports: [CreosPrismaModule],
+  imports: [UrbanexPrismaModule],
   controllers: [HealthController],
   providers: [HealthService],
 })

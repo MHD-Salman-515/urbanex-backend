@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 import {
   normalizeAreaInput,
   normalizeAreaValue,
@@ -147,7 +147,7 @@ interface AdminOutliersQuery {
 @Injectable()
 export class AdminMarketService {
   constructor(
-    private readonly creosPrisma: CreosPrismaService,
+    private readonly urbanexPrisma: UrbanexPrismaService,
     private readonly confidenceService: ConfidenceService,
   ) {}
 
@@ -165,13 +165,13 @@ export class AdminMarketService {
       byCity,
       byPropertyType,
     ] = await Promise.all([
-      this.creosPrisma.marketData.count(),
-      this.creosPrisma.marketData.count({
+      this.urbanexPrisma.marketData.count(),
+      this.urbanexPrisma.marketData.count({
         where: {
           OR: [{ area_m2: null }, { area_m2: { lte: 0 } }],
         },
       }),
-      this.creosPrisma.marketData.count({
+      this.urbanexPrisma.marketData.count({
         where: {
           AND: [
             {
@@ -183,7 +183,7 @@ export class AdminMarketService {
           ],
         },
       }),
-      this.creosPrisma.$queryRaw<{ count_rows: bigint | number }[]>(Prisma.sql`
+      this.urbanexPrisma.$queryRaw<{ count_rows: bigint | number }[]>(Prisma.sql`
         SELECT COUNT(*) AS count_rows
         FROM market_data
         WHERE city IS NULL
@@ -193,7 +193,7 @@ export class AdminMarketService {
           OR TRIM(district) = ''
           OR TRIM(property_type) = ''
       `),
-      this.creosPrisma.$queryRaw<MarketOutlierRow[]>(Prisma.sql`
+      this.urbanexPrisma.$queryRaw<MarketOutlierRow[]>(Prisma.sql`
         SELECT
           id,
           city,
@@ -218,7 +218,7 @@ export class AdminMarketService {
         ORDER BY ppm2_syp DESC
         LIMIT 20
       `),
-      this.creosPrisma.$queryRaw<MarketOutlierRow[]>(Prisma.sql`
+      this.urbanexPrisma.$queryRaw<MarketOutlierRow[]>(Prisma.sql`
         SELECT
           id,
           city,
@@ -243,13 +243,13 @@ export class AdminMarketService {
         ORDER BY ppm2_syp ASC
         LIMIT 20
       `),
-      this.creosPrisma.$queryRaw<MarketBreakdownRow[]>(Prisma.sql`
+      this.urbanexPrisma.$queryRaw<MarketBreakdownRow[]>(Prisma.sql`
         SELECT city AS key_name, COUNT(*) AS count_rows
         FROM market_data
         GROUP BY city
         ORDER BY count_rows DESC
       `),
-      this.creosPrisma.$queryRaw<MarketBreakdownRow[]>(Prisma.sql`
+      this.urbanexPrisma.$queryRaw<MarketBreakdownRow[]>(Prisma.sql`
         SELECT property_type AS key_name, COUNT(*) AS count_rows
         FROM market_data
         GROUP BY property_type
@@ -305,7 +305,7 @@ export class AdminMarketService {
     const propertyType = normalizeAreaValue('property_type', query.property_type);
     const limit = Math.min(200, Math.max(1, query.limit ?? 50));
 
-    const rows = await this.creosPrisma.areasPrice.findMany({
+    const rows = await this.urbanexPrisma.areasPrice.findMany({
       where: {
         ...(city ? { city } : {}),
         ...(district ? { district } : {}),
@@ -350,11 +350,11 @@ export class AdminMarketService {
     from.setDate(from.getDate() - days);
 
     const [latestFx, marketRows] = await Promise.all([
-      this.creosPrisma.fxRate.findFirst({
+      this.urbanexPrisma.fxRate.findFirst({
         where: { effective_at: { lte: new Date() } },
         orderBy: { effective_at: 'desc' },
       }),
-      this.creosPrisma.marketData.findMany({
+      this.urbanexPrisma.marketData.findMany({
         where: { created_at: { gte: from }, is_outlier: false },
         select: {
           city: true,
@@ -440,7 +440,7 @@ export class AdminMarketService {
     for (const [areaKey, stats] of aggregates.entries()) {
       const [city, district, propertyType] = areaKey.split('|');
       txOps.push(
-        this.creosPrisma.areasPrice.upsert({
+        this.urbanexPrisma.areasPrice.upsert({
           where: {
             city_district_property_type: {
               city,
@@ -473,7 +473,7 @@ export class AdminMarketService {
     }
 
     for (let i = 0; i < txOps.length; i += 200) {
-      await this.creosPrisma.$transaction(txOps.slice(i, i + 200));
+      await this.urbanexPrisma.$transaction(txOps.slice(i, i + 200));
     }
 
     return {
@@ -496,7 +496,7 @@ export class AdminMarketService {
     const csvContent = params.fileBuffer.toString('utf-8');
     const parsedRows = this.parseCsv(csvContent);
 
-    const latestFx = await this.creosPrisma.fxRate.findFirst({
+    const latestFx = await this.urbanexPrisma.fxRate.findFirst({
       where: { effective_at: { lte: new Date() } },
       orderBy: { effective_at: 'desc' },
     });
@@ -589,7 +589,7 @@ export class AdminMarketService {
 
     const insertedCount = dedupedRows.length
       ? (
-          await this.creosPrisma.marketData.createMany({
+          await this.urbanexPrisma.marketData.createMany({
             data: dedupedRows.map((row) => ({
               city: row.city,
               district: row.district,
@@ -631,7 +631,7 @@ export class AdminMarketService {
     const propertyType = normalizeAreaValue('property_type', query.property_type);
     const limit = Math.min(300, Math.max(1, query.limit ?? 100));
 
-    const rows = await this.creosPrisma.marketData.findMany({
+    const rows = await this.urbanexPrisma.marketData.findMany({
       where: {
         ...(city ? { city } : {}),
         ...(district ? { district } : {}),
@@ -735,7 +735,7 @@ export class AdminMarketService {
     updated_rows: number;
     rebuild: RebuildSummary | null;
   }> {
-    const result = await this.creosPrisma.marketData.updateMany({
+    const result = await this.urbanexPrisma.marketData.updateMany({
       where: { id: { in: params.ids } },
       data: { is_outlier: params.is_outlier },
     });
@@ -951,7 +951,7 @@ export class AdminMarketService {
     district: string;
     property_type: string;
   }): Promise<number | null> {
-    const rows = await this.creosPrisma.$queryRaw<
+    const rows = await this.urbanexPrisma.$queryRaw<
       Array<{
         sample_count: bigint | number;
         avg_ppm2: number | string | null;

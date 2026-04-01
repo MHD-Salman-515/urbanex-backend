@@ -23,7 +23,7 @@ export function detectOwnerChatIntent(params: {
     return 'PORTFOLIO';
   }
 
-  if (matches(text, [/سجل/i, /\bhistory\b/i, /سجل\s*creos/i])) {
+  if (matches(text, [/سجل/i, /\bhistory\b/i, /سجل\s*urbanex/i])) {
     return 'AI_HISTORY';
   }
 

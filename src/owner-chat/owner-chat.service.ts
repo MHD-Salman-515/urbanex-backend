@@ -1782,9 +1782,9 @@ export class OwnerChatService {
     return {
       response: {
         intent: 'AI_HISTORY',
-        text_ar: ['عنوان: سجل Creos AI', ...(lines.length ? lines : ['- لا توجد نتائج بعد.'])].join('\n'),
+        text_ar: ['عنوان: سجل Urbanex AI', ...(lines.length ? lines : ['- لا توجد نتائج بعد.'])].join('\n'),
         data: { days: history.days, limit: history.limit, items: top },
-        suggested_actions: [{ type: 'OPEN_HISTORY', label_ar: 'افتح سجل Creos AI', url: '/owner/ai-history' }],
+        suggested_actions: [{ type: 'OPEN_HISTORY', label_ar: 'افتح سجل Urbanex AI', url: '/owner/ai-history' }],
       },
       toolMessages: [
         {
@@ -1822,7 +1822,7 @@ export class OwnerChatService {
           { type: 'ASK_FOR_FIELDS', label_ar: 'قيّم سعر عقار', note: 'اختر عقارًا أولاً من القائمة' },
           { type: 'ASK_FOR_FIELDS', label_ar: 'اعطني مهامي الذكية' },
           { type: 'ASK_FOR_FIELDS', label_ar: 'محفظتي' },
-          { type: 'ASK_FOR_FIELDS', label_ar: 'سجل creos' },
+          { type: 'ASK_FOR_FIELDS', label_ar: 'سجل urbanex' },
           {
             type: 'ASK_FOR_FIELDS',
             label_ar: 'ملخص السوق للمنطقة',

@@ -38,7 +38,7 @@ describe('detectOwnerChatIntent', () => {
   it.each([
     'سجل ai',
     'history',
-    'سجل creos',
+    'سجل urbanex',
   ])('detects AI_HISTORY: %s', (message) => {
     expect(detectOwnerChatIntent({ message })).toBe('AI_HISTORY');
   });

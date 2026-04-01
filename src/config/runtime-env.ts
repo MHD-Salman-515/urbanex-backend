@@ -58,7 +58,7 @@ export function getListenPort(): number {
 }
 
 export function getRequiredRuntimeEnvVars(): string[] {
-  return ['DATABASE_URL', 'CREOS_DATABASE_URL'];
+  return ['DATABASE_URL', 'URBANEX_DATABASE_URL'];
 }
 
 export function getMissingRuntimeEnvVars(): string[] {

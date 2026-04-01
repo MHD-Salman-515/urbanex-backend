@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 
 export interface AdvisorRequestLogPayload {
   endpoint: string;
@@ -24,7 +24,7 @@ export interface AdvisorRequestLogPayload {
 export class AdvisorRequestLogService {
   private readonly logger = new Logger(AdvisorRequestLogService.name);
 
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async log(payload: AdvisorRequestLogPayload): Promise<string | undefined> {
     try {
@@ -50,7 +50,7 @@ export class AdvisorRequestLogService {
           : {}),
       };
 
-      const row = await this.creosPrisma.advisorRequestLog.create({
+      const row = await this.urbanexPrisma.advisorRequestLog.create({
         data: data as any,
       });
 

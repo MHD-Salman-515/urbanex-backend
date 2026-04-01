@@ -1,5 +1,6 @@
 import './register-paths';
 import './config/runtime-env';
+import * as dotenv from 'dotenv';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -20,6 +21,8 @@ import {
   parseBooleanEnv,
   parseCorsOrigins,
 } from './config/runtime-env';
+
+dotenv.config();
 
 function getDbInfo(databaseUrl?: string) {
   if (!databaseUrl) {
@@ -113,15 +116,6 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const mailService = app.get(MailService);
   const prisma = app.get(PrismaService);
-  const configuredCorsOrigins = parseCorsOrigins(process.env.CORS_ORIGIN);
-  const corsOrigins = configuredCorsOrigins.length
-    ? configuredCorsOrigins
-    : [
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:5174',
-        'http://127.0.0.1:5174',
-      ];
   const nodeEnv = getNodeEnv();
   const listenPort = getListenPort();
   const otpRequired = parseBooleanEnv(process.env.OTP_REQUIRED, false);
@@ -134,7 +128,9 @@ async function bootstrap() {
   let hotfixStatus: 'skipped' | 'applied' | 'failed' = 'skipped';
 
   app.enableCors({
-    origin: corsOrigins.length === 1 ? corsOrigins[0] : corsOrigins,
+    origin: process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',')
+      : ['http://localhost:5173'],
     credentials: true,
   });
   app.use(cookieParser());
@@ -153,8 +149,8 @@ async function bootstrap() {
   });
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Creos API')
-    .setDescription('Creos backend API documentation')
+    .setTitle('Urbanex API')
+    .setDescription('Urbanex backend API documentation')
     .setVersion('1.0')
     .addTag('advisor')
     .addTag('admin-advisor')
@@ -213,6 +209,8 @@ async function bootstrap() {
 
   try {
     await app.listen(listenPort);
+    console.log('🚀 Urbanex backend running');
+    console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN);
   } catch (error: unknown) {
     const code =
       typeof error === 'object' &&

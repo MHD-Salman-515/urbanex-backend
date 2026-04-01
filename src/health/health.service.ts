@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class HealthService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly creosPrisma: CreosPrismaService,
+    private readonly urbanexPrisma: UrbanexPrismaService,
   ) {}
 
   async getHousingDbStatus(): Promise<'ok' | 'fail'> {
@@ -19,9 +19,9 @@ export class HealthService {
     }
   }
 
-  async getCreosDbStatus(): Promise<'ok' | 'fail'> {
+  async getUrbanexDbStatus(): Promise<'ok' | 'fail'> {
     try {
-      await this.creosPrisma.$queryRaw(Prisma.sql`SELECT 1`);
+      await this.urbanexPrisma.$queryRaw(Prisma.sql`SELECT 1`);
       return 'ok';
     } catch {
       return 'fail';

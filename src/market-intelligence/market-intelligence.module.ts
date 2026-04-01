@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CreosPrismaModule } from '../prisma/creos-prisma.module';
+import { UrbanexPrismaModule } from '../prisma/urbanex-prisma.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { MarketController } from './market.controller';
 import { MarketIntelligenceController } from './market-intelligence.controller';
@@ -10,7 +10,7 @@ import { MarketStatsService } from './market-stats.service';
 import { MarketTrendService } from './market-trend.service';
 
 @Module({
-  imports: [CreosPrismaModule, PrismaModule],
+  imports: [UrbanexPrismaModule, PrismaModule],
   controllers: [MarketIntelligenceController, MarketController],
   providers: [
     MarketSnapshotService,

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 
 interface MarketRow {
   city: string | null;
@@ -12,7 +12,7 @@ interface MarketRow {
 
 @Injectable()
 export class MarketSnapshotService {
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async rebuildSnapshots(days = 365): Promise<{
     days: number;
@@ -28,7 +28,7 @@ export class MarketSnapshotService {
     const from = new Date();
     from.setDate(from.getDate() - days);
 
-    const rows = await this.creosPrisma.$queryRaw<MarketRow[]>(Prisma.sql`
+    const rows = await this.urbanexPrisma.$queryRaw<MarketRow[]>(Prisma.sql`
       SELECT city, district, property_type, price_per_m2_syp, created_at
       FROM market_data
       WHERE created_at >= ${from}
@@ -96,7 +96,7 @@ export class MarketSnapshotService {
       const stddev = this.stddevPopulation(bucket.values, avg);
       const volatility = avg > 0 ? stddev / avg : 0;
 
-      await this.creosPrisma.$executeRaw(Prisma.sql`
+      await this.urbanexPrisma.$executeRaw(Prisma.sql`
         INSERT INTO market_snapshot_daily
         (
           city,

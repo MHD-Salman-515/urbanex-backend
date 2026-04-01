@@ -9,18 +9,18 @@ export class HealthController {
   async getHealth(): Promise<{
     status: 'ok';
     db_housing: 'ok' | 'fail';
-    db_creos: 'ok' | 'fail';
+    db_urbanex: 'ok' | 'fail';
     time: string;
   }> {
-    const [dbHousing, dbCreos] = await Promise.all([
+    const [dbHousing, dbUrbanex] = await Promise.all([
       this.healthService.getHousingDbStatus(),
-      this.healthService.getCreosDbStatus(),
+      this.healthService.getUrbanexDbStatus(),
     ]);
 
     return {
       status: 'ok',
       db_housing: dbHousing,
-      db_creos: dbCreos,
+      db_urbanex: dbUrbanex,
       time: new Date().toISOString(),
     };
   }

@@ -23,7 +23,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Urbanex backend API built with NestJS and TypeScript.
 
 ## Project setup
 
@@ -66,28 +66,28 @@ curl -s "http://localhost:3000/debug/mail"
 
 ## Single-server setup (housing-backend + advisor)
 
-Run only this project (`housing-backend`). You do not need to run a separate `creos-api` server.
+Run only this project (`urbanex-backend`). You do not need to run a separate `urbanex-api` server.
 
 Use two DB connections in `.env`:
 
 ```env
 DATABASE_URL="mysql://root:@localhost:3306/housing_db"
-CREOS_DATABASE_URL="mysql://root:@localhost:3306/creos_ai"
+URBANEX_DATABASE_URL="mysql://root:@localhost:3306/urbanex_ai"
 PORT=3000
 ```
 
 Behavior:
 - Main modules (`users`, `tickets`, `property`, invoices, etc.) use `DATABASE_URL` (`housing_db`).
-- Advisor endpoints (`/advisor/seller-price`, `/advisor/buyer-evaluate`), advisor logs, and `/health` use `CREOS_DATABASE_URL` (`creos_ai`).
+- Advisor endpoints (`/advisor/seller-price`, `/advisor/buyer-evaluate`), advisor logs, and `/health` use `URBANEX_DATABASE_URL` (`urbanex_ai`).
 - Swagger docs remain on `/docs` in the same single server.
 
-## Prisma Baseline for `creos_ai` (existing non-empty DB)
+## Prisma Baseline for `urbanex_ai` (existing non-empty DB)
 
-If your MySQL schema already exists outside Prisma (for example database `creos_ai`), do this once before `migrate deploy` to avoid `P3005`:
+If your MySQL schema already exists outside Prisma (for example database `urbanex_ai`), do this once before `migrate deploy` to avoid `P3005`:
 
 ```bash
 # 1) Mark baseline migration as already applied (no DDL executed)
-npx prisma migrate resolve --applied 20260303165000_baseline_creos_ai
+npx prisma migrate resolve --applied 20260303165000_baseline_urbanex_ai
 
 # 2) Apply pending Prisma migrations (including advisor_request_logs if missing)
 npx prisma migrate deploy

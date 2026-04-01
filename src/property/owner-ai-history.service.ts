@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreosPrismaService } from '../prisma/creos-prisma.service';
+import { UrbanexPrismaService } from '../prisma/urbanex-prisma.service';
 
 export interface OwnerAiHistoryResponse {
   days: number;
@@ -45,7 +45,7 @@ export interface OwnerAiHistoryDetailResponse {
 
 @Injectable()
 export class OwnerAiHistoryService {
-  constructor(private readonly creosPrisma: CreosPrismaService) {}
+  constructor(private readonly urbanexPrisma: UrbanexPrismaService) {}
 
   async getHistory(params: {
     ownerId: number;
@@ -55,7 +55,7 @@ export class OwnerAiHistoryService {
     const from = new Date();
     from.setDate(from.getDate() - params.days);
 
-    const logs = await this.creosPrisma.advisorRequestLog.findMany({
+    const logs = await this.urbanexPrisma.advisorRequestLog.findMany({
       where: {
         ownerId: params.ownerId,
         createdAt: { gte: from },
@@ -86,7 +86,7 @@ export class OwnerAiHistoryService {
     >();
 
     if (logIds.length > 0) {
-      const outcomes = await this.creosPrisma.advisorOutcome.findMany({
+      const outcomes = await this.urbanexPrisma.advisorOutcome.findMany({
         where: {
           logId: { in: logIds },
         },
@@ -137,7 +137,7 @@ export class OwnerAiHistoryService {
       throw new NotFoundException('AI history item not found');
     }
 
-    const log = (await this.creosPrisma.advisorRequestLog.findFirst({
+    const log = (await this.urbanexPrisma.advisorRequestLog.findFirst({
       where: {
         id: BigInt(params.logId),
         ownerId: params.ownerId,
@@ -161,7 +161,7 @@ export class OwnerAiHistoryService {
       throw new NotFoundException('AI history item not found');
     }
 
-    const outcome = await this.creosPrisma.advisorOutcome.findFirst({
+    const outcome = await this.urbanexPrisma.advisorOutcome.findFirst({
       where: { logId: log.id.toString() },
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
       select: {
