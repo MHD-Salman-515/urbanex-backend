@@ -223,10 +223,21 @@ export class AuthService {
   }
 
   private frontendOAuthRedirect(): string {
-    return (
-      process.env.FRONTEND_OAUTH_REDIRECT ||
-      'http://localhost:5174/auth/oauth/callback'
-    );
+    const configuredRedirect = String(process.env.FRONTEND_OAUTH_REDIRECT || '').trim();
+    if (configuredRedirect) {
+      return configuredRedirect;
+    }
+
+    const configuredOrigin = String(process.env.CORS_ORIGIN || '')
+      .split(',')
+      .map((item) => item.trim())
+      .find(Boolean);
+
+    if (configuredOrigin) {
+      return `${configuredOrigin.replace(/\/+$/, '')}/auth/oauth/callback`;
+    }
+
+    return 'https://urbanex-frontend.vercel.app/auth/oauth/callback';
   }
 
   buildOAuthFrontendRedirect(accessToken: string, refreshToken?: string): string {

@@ -73,7 +73,7 @@ export class MailService {
   }
 
   async sendOtpEmail(email: string, code: string, expiresAt: Date): Promise<void> {
-    const subject = `UrbanexX • رمز التحقق | Verification Code`;
+    const subject = `Urbanex • رمز التحقق | Verification Code`;
     const expiresText = expiresAt.toLocaleString('en-US', {
       dateStyle: 'medium',
       timeStyle: 'short',
@@ -89,10 +89,10 @@ export class MailService {
             <tr>
               <td style="padding:36px 32px;background:linear-gradient(135deg,#0b1220 0%,#1e3a8a 100%);text-align:center;">
                 <div style="width:64px;height:64px;line-height:64px;margin:0 auto 18px auto;border-radius:50%;background:rgba(255,255,255,0.12);color:#ffffff;font-size:24px;font-weight:800;">
-                  C
+                  U
                 </div>
                 <h1 style="margin:0;font-size:30px;color:#ffffff;font-weight:800;letter-spacing:0.3px;">
-                  UrbanexX
+                  Urbanex
                 </h1>
                 <p style="margin:12px 0 0 0;font-size:15px;line-height:1.8;color:rgba(255,255,255,0.82);">
                   Secure verification for your account<br>
@@ -140,7 +140,7 @@ export class MailService {
             <tr>
               <td style="padding:18px 32px;background:#fafafa;border-top:1px solid #f0f0f0;text-align:center;">
                 <p style="margin:0;font-size:12px;line-height:1.8;color:#9ca3af;">
-                  © ${new Date().getFullYear()} UrbanexX — Secure Authentication System
+                  © ${new Date().getFullYear()} Urbanex - Secure Authentication System
                 </p>
               </td>
             </tr>
@@ -152,7 +152,7 @@ export class MailService {
   </div>
 `;
     const text = `
-UrbanexX Verification Code / رمز التحقق
+Urbanex Verification Code / رمز التحقق
 
 Code: ${code}
 Expires on: ${expiresText}
@@ -160,7 +160,7 @@ Expires on: ${expiresText}
 If you did not request this email, you can ignore it.
 إذا لم تطلب هذا الرمز، يمكنك تجاهل هذه الرسالة.
 
-UrbanexX Team
+Urbanex Team
 `.trim();
     await this.sendMail({
       to: email,
